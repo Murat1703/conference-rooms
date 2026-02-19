@@ -45,14 +45,16 @@ export const BookingModal = ({hall,onClose, createBooking, bookingData, setBooki
                 <div className={`${cls.hallsPageDate}  ${cls.hallsPageValuesItem}`}>
                     <DatePicker
                         selected={date}
-                        onChange={(d) => {setDate(d);                                        const y = d.getFullYear();
-                        const m = String(d.getMonth() + 1).padStart(2, "0");
-                        const day = String(d.getDate()).padStart(2, "0");
+                        onChange={(d) => {
+                            setDate(d);
+                            const y = d.getFullYear();
+                            const m = String(d.getMonth() + 1).padStart(2, "0");
+                            const day = String(d.getDate()).padStart(2, "0");
 
-                        const formatted = `${y}-${m}-${day}`
+                            const formatted = `${y}-${m}-${day}`
 
-                        setBookingDataModal((prev)=>({...prev, start_date: formatted}))
-                        setBookingData((prev)=>({...prev, start_date: formatted}))
+                            setBookingDataModal((prev)=>({...prev, start_date: formatted}))
+                            setBookingData((prev)=>({...prev, start_date: formatted}))
 
                         }}
                         minDate={new Date()}

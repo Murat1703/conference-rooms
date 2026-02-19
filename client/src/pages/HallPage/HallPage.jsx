@@ -166,7 +166,18 @@ export const HallPage = () =>{
     const [today, setToday] = useState(null);
 
 
+    const [errForm, setErrForm] = useState({
+        name: "", 
+        phone: "", 
+        start_date: "", 
+        count: "",
+        seating_type: ""
+    })
 
+    const checkForm = () =>{
+        const isError = errForm.name.length  ==0 || errForm.phone.length ==0 || errForm.start_date.length ==0 || errForm.count.length ==0 || errForm.seating_type.length ==0;
+        return isError;
+    }
     return(
         <>
         <section>
@@ -424,7 +435,8 @@ export const HallPage = () =>{
 
                                         const formatted = `${y}-${m}-${day}`
 
-                                        setBookingData((prev)=>({...prev, start_date: formatted}))
+                                        setBookingData((prev)=>({...prev, start_date: formatted}));
+                                        setErrForm((prev)=>({...prev, start_date: formatted}))
                                     }}
                                     minDate={new Date()}
                                     placeholderText="Выберите дату"
@@ -441,7 +453,9 @@ export const HallPage = () =>{
                                 <input 
                                     type="text" 
                                     value={bookingData.name}
-                                    onChange={(e)=>setBookingData(prev=>({...prev, name: e.target.value}))}
+                                    onChange={(e)=>{setBookingData(prev=>({...prev, name: e.target.value}));
+                                    setErrForm(prev=>({...prev, name: e.target.value}));
+                                    }}
                                 />
                             </div>
                             <div className={cls.hallsPageValuesItem}>
@@ -451,7 +465,9 @@ export const HallPage = () =>{
                                     name='phone'
                                     ref={phoneMask}
                                     value={bookingData.phone}
-                                    onChange={(e)=>setBookingData(prev=>({...prev, phone: e.target.value}))}
+                                    onChange={(e)=>{setBookingData(prev=>({...prev, phone: e.target.value}));
+                                    setErrForm(prev=>({...prev, phone: e.target.value}));
+                                    }}
                                 />
                             </div>
                             <div className={`${cls.hallsPagePriceDuration} ${cls.hallsPageValuesItem}`}>
@@ -474,7 +490,8 @@ export const HallPage = () =>{
                                 <input 
                                     type="number" 
                                     value={bookingData.count}
-                                    onChange={(e)=>setBookingData((prev)=>({...prev, count: e.target.value}))}
+                                    onChange={(e)=>{setBookingData((prev)=>({...prev, count: e.target.value}));
+                                    setErrForm((prev)=>({...prev, count: e.target.value}));}}
                                 />
                             </div>
                             <div className={cls.hallsPageValuesItem}>
@@ -491,10 +508,17 @@ export const HallPage = () =>{
                                     </div>
                                     {showArrangementTypes &&
                                     <ul className={cls.arrangementTypesList}>
-                                        <li onClick={()=>{setType('Театральная'); setBookingData((prev)=>({...prev, seating_type: "Театральная"}))}}>Театральная</li>
-                                        <li onClick={()=>{setType('С Партами');setBookingData((prev)=>({...prev, seating_type: "С Партами"}))}}>С Партами</li>
-                                        <li onClick={()=>{setType('Островками');setBookingData((prev)=>({...prev, seating_type: "Островками"}))}}>Островками</li>
-                                        <li onClick={()=>{setType('П-образная'); setBookingData((prev)=>({...prev, seating_type: "П-образная"}))}}>П-образная</li>
+                                        <li onClick={()=>{setType('Театральная'); setBookingData((prev)=>({...prev, seating_type: "Театральная"}));
+                                        setErrForm((prev)=>({...prev, seating_type: "Театральная"}))
+                                        }}>Театральная</li>
+                                        <li onClick={()=>{setType('С Партами');setBookingData((prev)=>({...prev, seating_type: "С Партами"}));
+                                        setErrForm((prev)=>({...prev, seating_type: "С Партами"}))
+                                        }}>С Партами</li>
+                                        <li onClick={()=>{setType('Островками');setBookingData((prev)=>({...prev, seating_type: "Островками"}));
+                                        setErrForm((prev)=>({...prev, seating_type: "Островками"}))}}>Островками</li>
+                                        <li onClick={()=>{setType('П-образная'); setBookingData((prev)=>({...prev, seating_type: "П-образная"}));
+                                        setErrForm((prev)=>({...prev, seating_type: "П-образная"}))
+                                        }}>П-образная</li>
                                     </ul>}
                                 </div>
                             </div>
@@ -502,7 +526,11 @@ export const HallPage = () =>{
                                 <p>Стоимость аренды</p>
                                 <p>{hall.price} тг</p>
                             </div>
-                            <Button action={()=>createBooking(bookingData)}>
+                            <Button action={()=>{
+                                console.log(checkForm())
+                                if (checkForm()==true) {console.log('jib,rf');return};
+                                createBooking(bookingData)
+                            }}>
                                 <p>Отправить заявку </p>
                             </Button>
                         </div>}
