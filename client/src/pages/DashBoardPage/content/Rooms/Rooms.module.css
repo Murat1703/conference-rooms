@@ -1,0 +1,101 @@
+.roomsContentTable{
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+.roomsContentTableTop{
+    padding: 12px 24px;
+    display: flex;
+    width: 100%;
+    align-items: center;
+    gap: 24px;
+    background: var(--border-default);
+}
+.roomsContentTableTop > p{
+    padding: 0 10px;
+    font-size: 18px;
+    line-height: 24px;
+}
+.roomsContentTableTop > p:nth-child(2),
+.roomsContentTableTop > p:nth-child(3){
+    flex: 1 0 0;
+    text-align: right;
+}
+.roomsContentTableTop > p:nth-child(1){
+    width: 150px;
+}
+.roomsContentTableTop > p:nth-last-child(1){
+    display: flex;
+    flex: 1 0 0;
+    justify-content: end;
+    align-items: end;
+}
+.roomsContentTableContent{
+    display: flex;
+    flex-direction: column;
+}
+.hallItem{
+    display: flex;
+    width: 100%;
+    padding: 24px 24px;
+    gap: 24px;
+    /* border-bottom: 1px solid red; */
+}
+.hallItemName{
+    width: 150px;
+}
+.hallItem > div > p{
+    width: 100%;
+    padding: 0 10px;
+    font-size: 18px;
+    line-height: 24px;
+    word-wrap: break-word;
+}
+.hallItem > div:nth-child(2),
+.hallItem > div:nth-child(3),
+.hallItem > div:nth-child(4){
+    flex: 1 0 0;
+}
+.hallItem > div:nth-child(2) > p,
+.hallItem > div:nth-child(3) > p,
+.hallItem > div:nth-child(4) > p{
+    text-align: right;
+}
+.hallItemMore{
+    display: flex;
+    justify-content: end;
+}
+.hallItemButtons{
+    display: flex;
+    align-items: center;
+    gap: 3px;
+}
+.hallItemButtons > button{
+    padding: 6px 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    height: 34px;
+    background: var(--call-btn-hover-bg);
+    border: 1px solid var(--border-default);
+}
+.hallItemButtons > button:hover{
+    border: 1px solid var(--border-hover);
+}
+.addBtn{
+    padding: 10px 24px;
+    background: var(--btn-bg-primary);
+    color: var(--text-color-light );
+    border-radius: 320px;
+    margin-bottom: 24px;
+}
+.addBtn:hover{
+    background: var(--btn-bg-hover);
+}
+.spinnerWrapper{
+    padding: 32px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

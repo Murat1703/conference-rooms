@@ -1,0 +1,141 @@
+.bookingModal{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: end;
+    z-index: 100;
+    background: rgba(0,0,0,.8)
+}
+.btnCloseModal{
+    position: absolute;
+    width: 44px;
+    height: 44px;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: transparent!important;
+}
+.hallsPagePrice{
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap:24px;
+    padding: 64px 32px 24px 32px;
+    background: var(--bg-primary);
+    box-shadow: 0 0 20px rgba(163, 159, 145, 0.24);
+    border-radius: 24px;
+}
+.bookingModal .hallsPagePrice{
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+.hallsPagePrice > button{
+    background: var(--btn-bg-primary);
+    justify-content: center;
+}
+.hallsPagePrice > button:hover{
+    background: var(--btn-bg-hover);
+}
+.hallsPageDate{
+    position: relative;
+    width: 100%;
+    padding: 12px 24px;
+    border-radius: 10px;
+    background: var(--bg-primary);
+    border: 1px solid var(--border-default)
+}
+.hallsPageDate > span{
+    position: absolute;
+    top: -15px;
+    left: 24px;
+    background: var(--bg-primary);
+    padding: 0 5px;
+    border-radius: 4px;
+} 
+.hallsPageDate > div{
+    width: 100%;
+}
+.hallsPagePriceDuration, .hallsPageValuesItem{
+    position: relative;
+    width: 100%;
+    padding: 12px 24px;
+    border-radius: 10px;
+    background: var(--bg-primary);
+    border: 1px solid var(--border-default);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.hallsPagePriceDuration > span,
+.hallsPageValuesItem > span{
+    position: absolute;
+    top: -15px;
+    left: 24px;
+    background: var(--bg-primary);
+    padding: 0 5px;
+    border-radius: 4px;
+}
+.durationItem{
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+}
+.durationItem > div:nth-child(1){
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--border-default)
+}
+.durationItem > div:nth-child(1) > span{
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--btn-bg-primary);
+}
+.hallsPageValuesItem > input{
+    padding: 10px 0;
+}
+.hallsSeatingArrangement{
+    padding: 10px 0;
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    cursor: pointer;
+}
+.hallsSitType{
+    position: relative;
+}
+.arrangementTypesList{
+    position: absolute;
+    width: 100%;
+    background-color: var(--bg-primary);
+}
+.arrangementTypesList > li{
+    padding: 5px 10px;
+    cursor: pointer;
+}
+.arrangementTypesList > li:hover{
+    background: var(--border-default);
+}
+.priceInfo{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+}
+.priceInfo > p:nth-child(2){
+    font-size: 28px;
+    line-height: 32px;
+}

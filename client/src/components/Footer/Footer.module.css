@@ -1,0 +1,124 @@
+.footerContent{
+    padding: 64px 96px;
+    background: var(--btn-dark);
+    display: flex;
+    flex-direction: column;
+    gap: 56px;
+    color: var(--text-color-light);
+}
+.footerContent > *{
+    color: var(--text-color-light);
+}
+.footerTop{
+    height: 342px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-bottom: 56px;
+    border-bottom: 1px solid rgba(235, 233, 225, 0.16);
+}
+.footerTop > div{
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+.footerSocialButtons{
+    display: flex;
+    flex: 1 0 0;
+    align-items: flex-start;
+    gap: 12px;
+}
+.footerBtn{
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    border: 1px solid rgba(235, 233, 225, 0.16);
+}
+.footerBtn:hover{
+    border: 1px solid rgba(235, 233, 225, 0.64);
+}
+.footerUpBtnWrapper{
+    display: flex;
+    flex: 1 0 0;
+    align-items: flex-end;
+    justify-content: end;
+}
+.footerInfoList > div:nth-child(1),
+.footerInfoList > div:nth-child(3)
+{
+    display: flex;
+    flex: 1 0 0
+}
+.footerInfoList > div:nth-child(3){
+    justify-content: end;
+}
+.footerInfoList > div > a{
+    color: var(--text-color-light);
+}
+.footerInfoList > div:nth-child(2){
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+.footerInfoList > div:nth-child(2) > p{
+    color: var(--text-color-light);
+}
+.footerInfoList > div:nth-child(2) > p:nth-child(3){
+    opacity: .5;
+}
+.footerBottom{
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+.footerBottom > div > p{
+    color: var(--text-color-light);
+}
+.footerBottom > div:nth-child(1) > p{
+    opacity: .5;
+}
+.footerBottom > div:nth-child(2){
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+@media (max-width: 768px){
+    .footerContent{
+        padding: 48px 20px;
+    }
+    .footerInfoList{
+        flex-direction: column;
+        text-align: left;
+        align-items: start;
+        justify-content: start;
+        margin: 0;
+        width: 100%;
+        gap: 8px;
+    }
+    .footerInfoList > div{
+        width: 100%;
+        justify-content: flex-start;
+        align-items: flex-start;
+    }
+    .footerInfoList > div:nth-child(2){
+        align-items: start;
+    }
+    .footerInfoList > div:nth-child(3){
+        align-items: start;
+        justify-content: start;
+    }
+    .footerBottom > div:nth-child(2){
+        flex-direction: column;
+    }
+    .footerBottom > div:nth-child(1) > p{
+        font-size: 11px;
+        line-height: 14px;
+    }
+}

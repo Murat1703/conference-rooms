@@ -1,0 +1,106 @@
+.bookingsInner{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+}
+.bookingBtn{
+    padding: 6px 12px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    background: var(--btn-bg-primary);
+    border-radius: 320px;
+}
+.bookingBtn:hover{
+    background: var(--btn-bg-hover);
+}
+.bookingBtn > p{
+    color: var(--text-color-light);
+}
+.bookingTable{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+.bookingTableTop{
+    padding: 12px 24px;
+    display: flex;
+    width: 100%;
+    align-items: center;
+    gap: 24px;
+    background: var(--border-default);
+}
+.bookingTableTop > p:nth-child(1){
+    width: 100px;
+}
+.bookingTableTop > p:nth-child(2),
+.bookingTableTop > p:nth-child(3),
+.bookingTableTop > p:nth-child(4),
+.bookingTableTop > p:nth-child(5),
+.bookingTableTop > p:nth-child(6){
+    flex: 1 0 0;
+    justify-content: end;
+    display: flex;
+}
+.bookingItem{
+    display: flex;
+    width: 100%;
+    padding: 24px; 
+    gap: 24px;
+    cursor: pointer;
+    position: relative;
+}
+.itemButtons{
+    display: none;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+.itemButtons > button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 12px;
+    background: var(--btn-bg-primary);
+    border-radius: 320px;
+    color: var(--text-color-light);
+}
+.itemButtons > button:hover{
+    background: var(--btn-bg-hover);
+}
+.bookingItem:hover{
+    background: rgba(0,0,0,.05);
+}
+.bookingItem:hover .itemButtons{
+    display: flex;
+    gap:6px;
+    align-items: center;
+}
+.bookingItem > p:nth-child(1){
+    /* width: 200px; */
+    text-align: right;
+    display: flex;
+    justify-content: end;
+    /*align-items: end; */
+    width: 100px;
+}
+.bookingItem > p:nth-child(2),
+.bookingItem > p:nth-child(3),
+.bookingItem > p:nth-child(4),
+.bookingItem > p:nth-child(5),
+.bookingItem > p:nth-child(6){
+    flex: 1 0 0;
+    display: flex;
+    justify-content: end;
+}
+.bookingTableBottom{
+    display: flex;
+    flex-direction: column;
+}
+.spinnerWrapper{
+    padding: 32px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

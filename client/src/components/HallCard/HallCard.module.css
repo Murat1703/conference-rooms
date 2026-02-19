@@ -1,0 +1,83 @@
+.conferenceHallItem{
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    padding: 48px 24px;
+    background: rgba(255, 255, 255, 0.24);
+    position: relative;
+}
+.conferenceHallItem:hover{
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.48);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+}
+.conferenceHallItem:hover .conferenceHallItemLink{
+    transition: .5s linear ease!important;
+    opacity: 1;
+    z-index: 3;
+}
+.conferenceHallItemLink{
+    transition: .5s linear ease!important;
+    opacity: 0;
+    z-index: -100;
+    position: absolute;
+    top: 186px;
+    left: 50%;
+    margin-left: -59px;
+    padding: 11px 24px;
+    background: var(--btn-dark);
+    padding: 11px 24px;
+    height: 44px;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    border-radius: 320px;
+    color: var(--text-color-light);
+}
+.conferenceHallItemLink > p{
+    color: var(--text-color-light);
+}
+.conferenceHallItemLink:hover{
+    background: var(--btn-dark-hover);
+}
+.conferenceHallItemImg{
+    width: 100%;
+    height: 260px;
+    position: relative;
+}
+.conferenceHallItemImg > img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center left;
+}
+.conferenceHallItemText{
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+.conferenceHallSquare{
+    font-size: 30px;
+    line-height: 32px;
+    font-style: italic;
+    font-family: 'PT Serif', sans-serif;
+}
+.conferenceHallItemTextDescriptions{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.descriptionItem{
+    width: 100%;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+}
+.descriptionItem > span:nth-child(1){
+    opacity: .6;
+}
+@media (max-width:768px){
+    .conferenceHallItem{
+        padding: 12px 10px;
+    }
+}

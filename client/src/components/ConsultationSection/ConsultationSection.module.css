@@ -1,0 +1,135 @@
+.consultationSectionWrapper{
+    background: rgba(163, 159, 145, 0.24);
+}
+.consultationSectionInner{
+    display: flex;
+    align-items: flex-end;
+    gap :104px;
+    padding: 96px;
+}
+.left{
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    max-width: 520px;
+}
+.consultationSectionTitleBlock{
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.consultationSectionTitleBlock > h2{
+    font-family: "PT Serif", sans-serif;
+    font-size: 40px;
+    line-height: 48px;
+}
+.right{
+    flex-direction: column;
+    gap: 20px;
+    display: flex;
+    flex: 1 0 0;
+}
+.inputValues{
+    width: 100%;
+    gap:20px;
+    align-items: center;
+    display: flex;
+}
+.inputValues > div{
+    width: 100%;
+    flex: 1 0 0;
+    display: flex;
+    position: relative;
+}
+.inputValues > div > span{
+    position: absolute;
+    right: 10px;
+    top: 15px;
+    color: red;
+}
+.inputValues > div> input{
+    display: flex;
+    flex: 1 0 0;
+    padding: 14px 0;
+    font-size: 16px;
+    line-height: 22px;
+    border-bottom: 1px solid rgba(29, 29, 27, 0.14);
+}
+.inputValues > div > input:focus{
+    border-bottom: 1px solid rgba(29, 29, 27, 0.64);
+}
+.formBottomText{
+    width: 100%;
+    display: flex;
+    justify-content: end;
+    gap: 20px;
+}
+.formBottomText > p{
+    display: flex;
+    flex: 1 0 0;
+    justify-content: end;
+    font-size: 11px;
+    line-height: 14px;
+    text-align: right;
+    opacity: .5;
+}
+.formBottomText > button{
+    background: var(--btn-dark);
+}
+.formBottomText > button:hover{
+    background: var(--btn-dark-hover);
+}
+.loadingWrapper{
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: rgba(29, 29, 27, 0.64);
+    backdrop-filter: blur(3px);
+    z-index: 1000;
+    width: 100%;
+    height: 100dvh;
+}
+
+@media (max-width: 768px){
+    .consultationSectionInner{
+        padding: 48px 20px;
+        flex-direction: column;
+        gap: 24px;
+    }
+    .consultationSectionTitleBlock{
+        flex-wrap: wrap;
+    }
+    .consultationSectionTitleBlock > h2{
+        font-size: 32px;
+        line-height: 32px;
+    }
+    .left{
+        max-width: 100%;
+        gap: 24px;
+    }
+    .inputValues{
+        flex-direction: column;
+    }
+    .inputValues > input{
+        width: 100%;
+        font-size: 13px;
+        line-height: 18px;
+    }
+    .formBottomText{
+        flex-direction: column-reverse;
+    }
+    .formBottomText > button{
+        max-width: 232px;
+    }
+    .formBottomText > p{
+        text-align: left;
+    }
+    .right{
+        width: 100%;
+    }
+    
+}

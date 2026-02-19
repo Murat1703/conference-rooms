@@ -1,0 +1,128 @@
+.loginPageWrapper{
+    width: 100%;
+    height: 100dvh;
+    background: var(--btn-dark);
+}
+.loginPageContent{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+}
+.loginPageWindow{
+    display: flex;
+    align-items: center;
+    width: 90%;
+    height: 80%;
+}
+.left{
+    width: 60%;
+    height: 100%;
+    position: relative;
+}
+.left::before{
+    content: '';
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    position: absolute;
+    background: rgba(51, 51, 47, .3);
+    z-index: 3;
+}
+.left > img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.right{
+    flex: 1 0 0;
+    height: 100%;
+    background-color: var(--bg-primary);
+    padding: 96px 48px;
+    display: flex;
+    gap: 64px;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+}
+.loginImgWrapper{
+    max-width: 400px;
+}
+.loginImgWrapper > img{
+    width: 100%;
+}
+.loginTitleBlock{
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+}
+.loginTitleBlock > div:nth-child(2){
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+.loginTitleBlock > div:nth-child(2)> h3{
+    font-size: 28px;
+    line-height: 32px;
+    text-transform: uppercase;
+    font-family: var(--title-font);
+    color: var(--text-color-primary);
+}
+.loginPageValues{
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+}
+.loginPageValues > div{
+    position: relative;
+}
+.loginPageValues > div > svg{
+    position: absolute;
+    top: 10px;
+    left: 0;
+    opacity: .5;
+}
+.passShowIcon{
+    cursor: pointer;
+    width: 24px;
+    height: 24px;
+    position: absolute;
+    right: 20px;
+    top: 10px;
+}
+.loginPageValues > div > input{
+    width: 100%;
+    padding: 16px 24px;
+    border-bottom: 1px solid var(--border-default);
+    color: var(--text-color-primary);
+}
+.loginPageValues > div > input:focus{
+    border-bottom: 1px solid var(--border-hover);
+}
+.loginPageValues > div:focus-within svg{
+    opacity: .8;
+}
+.loginPageValues > div:nth-child(2){
+    margin-bottom: 12px;
+}
+.loginPageValues > button{
+    padding: 16px 48px;
+    background: var(--btn-dark);
+    border-radius: 320px;    
+    margin: 0 auto;
+}
+.loginPageValues > button:hover{
+    background: var(--btn-dark-hover);
+}
+.loginPageValues > button > p{
+    color: var(--text-color-light);
+}

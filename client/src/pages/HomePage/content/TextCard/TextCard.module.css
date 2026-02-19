@@ -1,0 +1,26 @@
+.textCard{
+    padding: 72px 24px 72px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.textCard > p:nth-child(1){
+    font-size: 40px;
+    line-height: 48px;
+    font-style: italic;
+    font-family: "PT Serif", sans-serif;
+}
+
+.right{
+    width: 100%;
+}
+
+@media (max-width: 768px){
+    .textCard{
+        padding: 48px 0;
+    }
+    .textCard > p:nth-child(1){
+        font-size: 28px;
+        line-height: 32px;
+    }
+}

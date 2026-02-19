@@ -1,0 +1,115 @@
+.headerWrapper{
+    width: 100%;
+    position: fixed;
+    top: 0;
+    z-index: 100;
+    left: 0;
+    background: transparent;
+}
+.headerWrapperScrolled{
+    background: #E5E3DA;
+}
+.headerContent{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 48px;
+}
+.headerContent{
+    display: flex;
+    align-items: center;
+    gap: 48px;
+}
+.headerContent > .left, .headerContent > .right{
+    display: flex;
+    align-items: center;
+    gap: 48px;
+} 
+.menuBtn{
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    cursor: pointer;
+}
+.menuBtnIcon{
+    position: relative;
+    width: 40px;
+    height: 7px;
+    display: flex;
+    flex-direction: column       ;
+}
+.menuBtnIcon > span{
+    width: 100%;
+    height: 1px;
+    background: var(--btn-dark);
+    position: absolute;
+}
+.menuBtnIcon > span:nth-child(1){
+    top: 0;
+}
+
+.menuBtnIcon > span:nth-child(2){
+    bottom: 0;
+}
+.langBtn{
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+.logoWrapper{
+    height: 50px;
+}
+.logoWrapper > img{
+    width: auto;
+    height: 100%;
+}
+@media (max-width: 768px){
+    .headerOpenedMenu{
+        background: var(--btn-dark);
+        border-bottom: 1px solid rgba(235, 233, 225, .7);
+    }
+    .headerOpenedMenu > .headerContent > .left > .menuBtn > .menuBtnIcon{
+        width: 40px;
+    }
+    .headerOpenedMenu > .headerContent > .left  > a{
+        color: var(--text-color-light);
+    }
+    .headerOpenedMenu > .headerContent > .left > .menuBtn > .menuBtnIcon > span{
+        background: var(--text-color-light);
+    }
+    .headerOpenedMenu .mobilePhoneLink p{
+        color: var(--text-color-light);
+    }
+    .headerOpenedMenu .mobilePhoneLink svg path{
+        stroke: var(--text-color-light);
+    }
+    /* .headerWrapper{
+        border-bottom: 1px solid rgb(29, 28, 24)
+    } */
+    .headerContent{
+        padding: 18px 20px;
+    }
+    .headerContent > .left{
+        gap: 24px;
+    }
+    .mobilePhoneLink{
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: var(--text-color-primary);
+    }
+    .mobileLogo{
+        /* width: 50px; */
+        /* height: 26px; */
+    }
+    .mobileLogo{
+    
+    }
+    .mobileLogo > img{
+        width: 100%;
+        height: 100%;
+    }
+    .headerContent > .right{
+        display: none;
+    }
+}

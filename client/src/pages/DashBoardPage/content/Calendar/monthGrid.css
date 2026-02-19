@@ -1,0 +1,115 @@
+.mg {
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #fff;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
+}
+
+.mgTop {
+  padding: 14px 16px;
+  border-bottom: 1px solid #e5e7eb;
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.mgTitle {
+  font-size: 18px;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.mgWeekHeader {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  background: #fafafa;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.mgWeekDay {
+  padding: 10px 8px;
+  font-size: 12px;
+  color: #6b7280;
+  text-align: center;
+  border-right: 1px solid #e5e7eb;
+  user-select: none;
+}
+.mgWeekDay:last-child { border-right: none; }
+
+.mgGrid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-auto-rows: 120px; /* высота дня */
+}
+
+.mgCell {
+  border-right: 1px solid #e5e7eb;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  /* gap: 6px; */
+}
+.mgCell:nth-child(7n) { border-right: none; }
+
+.isOtherMonth {
+  background: #fcfcfd;
+  color: #9ca3af;
+}
+
+.mgCellTop {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.mgDayNum {
+  font-size: 12px;
+  padding: 2px 6px;
+  border-radius: 999px;
+}
+
+.mgEvents {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  overflow: hidden;
+}
+
+.mgEvent {
+  font-size: 12px;
+  padding: 2px 4px;
+  border-radius: 8px;
+  background: #eef2ff;
+  white-space: nowrap;
+  /* overflow: hidden;
+  text-overflow: ellipsis; */
+}
+
+.mgMore {
+  font-size: 12px;
+  color: #6b7280;
+}
+.mgButtons{
+    display: flex;
+    flex-direction: row-reverse;
+    gap: 8px;
+    align-items: center;
+}
+.mgButtons > button{
+    padding: 6px 12px;
+    background: var(--btn-bg-primary);
+    border-radius: 320px;
+    color: var(--text-color-light);
+}
+.mgButtons > button:hover{
+    background: var(--btn-bg-hover); 
+}
+
+.st-booked { background: #e0f2fe; }
+.st-confirmed { background: #dcfce7; }
+.st-cancelled { background: #f3f4f6; }
+.todayCell{
+    background: rgba(0,0,0,.15);
+}

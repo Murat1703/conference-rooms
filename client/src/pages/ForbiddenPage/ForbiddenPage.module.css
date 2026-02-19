@@ -1,0 +1,45 @@
+.forbiddenPageWrapper{
+    width: 100%;
+    height: 100dvh;
+}
+.forbiddenPageContent{
+    padding: 5vw 2.5vw;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+.forbiddenPageTitleBlock{
+    display: flex;
+    flex-direction: column;
+    gap: .625vw;
+}
+.forbiddenPageTitleBlock > h2{
+    font-family: var(--title-font);
+    font-size: 3.75vw;
+    line-height: 4.5833vw;
+    text-transform: uppercase;
+}
+.forbiddenPageTitleBlock > p{
+    font-size: .7292vw;
+    line-height: 1.1458vw;
+}
+
+@media (max-width: 768px){
+    .forbiddenPageContent{
+        padding: 48px 20px;
+    }
+    .forbiddenPageTitleBlock{
+        gap: 12px;
+    }
+    .forbiddenPageTitleBlock > h2{
+        font-size: 30px;
+        line-height: 32px;
+    }
+    .forbiddenPageTitleBlock > p{
+        font-size: 13px;
+        line-height: 22px;
+    }
+}

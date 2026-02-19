@@ -1,0 +1,95 @@
+.contactsPageWrapper{
+    width: 100%;
+    height: 100dvh;
+}
+.contactsPageContent{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    padding: 120px 0 0 0;
+}
+.contactsPageAddress{
+    position: fixed;
+    left: 48px;
+    bottom: 24px;
+    display: flex;
+    width: 430px;
+    padding-bottom: 24px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 48px;
+    border-radius: 24px;
+    background: #0000007a;
+    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(16px);
+}
+.infoCity{
+    padding: 24px 32px;
+}
+.infoCity > p{
+    color: var(--text-color-light);
+}
+.infoCity > p:nth-child(1){
+    font-family: "PT Serif", sans-serif;
+    font-size: 40px;
+    font-style: italic;
+    font-weight: 400;
+    line-height: 48px;
+}
+.infoCity > p:nth-child(2){
+    opacity: .75;
+}
+.addressList{
+    padding: 0 32px;
+    display: flex;
+    flex-direction: column;
+    align-self: stretch;
+    gap: 12px;
+}
+.addressList > li{
+    list-style: none;
+    display: flex;
+    align-items: flex-end;
+    gap: 12px;
+    align-self: stretch;
+    justify-content: space-between;
+}
+.addressList > li > p,
+.addressList > li > a{
+    color: var(--text-color-light);
+}
+.addressList > li > p:nth-child(1){
+    opacity: .5;
+}
+.addressList > li:nth-child(4) > a{
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+
+@media (max-width: 768px){
+    .contactsPageWrapper{
+        width: 100%;
+        height: 100dvh;
+    }
+    .contactsPageContent{
+        padding: 80px 0 0 0;
+        flex-direction: column;
+        display: flex;
+    }
+    .contactsPageContent > div:nth-child(1){
+        display: flex;
+        flex: 1 0 0;
+    }
+    .contactsPageAddress{
+        width: 100%;
+        position: relative;
+        left: auto;
+        bottom: 0;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+}

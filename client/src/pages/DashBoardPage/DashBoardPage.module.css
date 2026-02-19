@@ -1,0 +1,84 @@
+.dashBoardWrapper{
+    width: 100%;
+    height: 100dvh;
+}
+.dashBoardContent{
+    width: 100%;
+    height: 100%;
+    display: flex;
+}
+.dashBoardNavigationBlock{
+    position: fixed;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 64px;
+    width: 300px;
+    background: rgba(178, 177, 162, 1);
+    /* background: #262E34; */
+    padding: 64px 0;
+    color: var(--text-color-light);
+}
+.dashBoardNavTop{
+    display: flex;
+    flex-direction: column;
+}
+.dashBoardLogo{
+    width: 100%;
+    padding: 16px 32px;
+}
+.dashBoardNavTop{
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+.dashBoardNavList{
+    display: flex;
+    flex-direction: column;
+    /* gap: 16px; */
+}
+.dashBoardNavList > li{
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    gap: 8px;
+}
+.dashBoardNavList > li:hover{
+    background: rgba(235, 233, 225, 0.32);
+}
+.dashBoardNavList > li p{
+    font-size:18px;
+    line-height: 24px;
+    text-transform: uppercase;
+}
+.dashBoardNavList> li > div{
+    width: 30px;
+    height: 30px;
+}
+.dashBoardInner{
+    margin-left: 300px;
+    flex: 1 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+.dashBoardTop{
+    width: 100%;
+    display: flex;
+    justify-content: end;
+    padding: 20px 48px;
+    border-bottom: 1px solid var(--border-default);
+}
+.dashBoardTop > p{
+    font-size: 18px;
+    line-height: 24px;
+}
+.dashBoardTop > p:nth-child(2){
+    margin-left: 8px;
+    font-style: italic;
+}
+.dashBoardBottom{
+    padding: 0 48px;
+}

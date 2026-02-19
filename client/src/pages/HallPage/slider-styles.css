@@ -1,0 +1,7 @@
+.swiper-thumbs .swiper-wrapper .swiper-slide{
+    opacity: .35;
+}
+
+.swiper-thumbs .swiper-wrapper .swiper-slide.swiper-slide-thumb-active{
+    opacity: 1;
+}

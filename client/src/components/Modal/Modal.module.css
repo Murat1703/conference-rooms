@@ -1,0 +1,146 @@
+.modalWrapper{
+    position: fixed;
+    width: 100%;
+    height: 100dvh;
+    background: #0000007a;
+    backdrop-filter: blur(6px);
+    z-index: 100;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.modalContent{
+    width: 480px;
+    padding: 32px;
+    gap: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: var(--bg-primary);
+}
+.modalTitleBlock{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+    align-self: stretch;
+}
+.modalTitleBlock > div:nth-child(1){
+    display: flex;
+    justify-content: end;
+    width: 100%;
+}
+.modalTitleBlock > div:nth-child(1) > button{
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.modalTitleBlock > div:nth-child(2){
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    align-items: center;
+    text-align: center;
+}
+.modalTitleBlock > div:nth-child(2) > h3{
+    font-family: "PT Serif", sans-serif;
+    font-size: 40px;
+    font-style: italic;
+    font-weight: 400;
+    line-height: 48px;
+}
+.inputsValues{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-end;
+    gap: 32px;
+    align-self: stretch;
+}
+.inputsValues > div{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: flex-start;
+    align-self: stretch;
+}
+.inputsValues > div:nth-child(1)> div {
+    width: 100%;
+    position: relative;
+}
+.inputsValues > div:nth-child(1)> div >span{
+    position: absolute;
+    right: 20px;
+    color: red;
+    top: 10px;
+}
+.inputsValues > div:nth-child(1)> div> input{
+    width: 100%;
+    display: flex;
+    padding: 14px 0;
+    align-items: center;
+    gap: 8px;
+    align-self: stretch;
+    border-bottom: 1px solid rgba(29, 29, 27, .14);
+}
+.inputsValues > div:nth-child(1)> div> input:focus{
+    border-bottom: 1px solid rgba(29, 29, 27, .64);
+
+}
+.inputsValues > div:nth-child(2){
+    align-self: stretch;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.inputsValues > div:nth-child(2) > button{
+    padding: 11px 24px;
+    background: var(--btn-bg-primary);
+    border-radius: 320px;
+    width: 100%;
+}
+.inputsValues > div:nth-child(2) > button:hover{
+    background: var(--btn-bg-hover);
+}
+.inputsValues > div:nth-child(2) > button > p{
+    color: var(--text-color-light);
+    text-align: center;
+    margin: 0 auto;
+    width: 100%;
+}
+.inputsValues > div:nth-child(2) >p{
+    text-align: center;
+    font-size: 9px;
+    line-height: 13px;
+}
+.spinnerWrapper{
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100dvh;
+    background: rgba(29, 29, 27, .64);
+    backdrop-filter: blur(2px);
+    z-index: 1000;
+}
+
+@media (max-width: 500px){
+    .modalContent{
+        width: 90%;
+        padding: 24px;
+    }
+    .modalTitleBlock > div:nth-child(2) > h3{
+        font-size: 30px;
+        line-height: 32px;
+    }
+}
