@@ -27,7 +27,7 @@ export const LoginPage = ({setUser})=>{
         try{   
             const res = await apiLogin(form)
             setUser(res.data);
-            console.log(res)
+            // console.log(res)
             navigate("/dashboard");
         }catch(err){
             setError("Неверные данные");
@@ -66,7 +66,10 @@ export const LoginPage = ({setUser})=>{
                                 <path d="M12 14.5V16.8" stroke="#1D1D1B" strokeWidth="1.25" strokeLinecap="round"/>
                                 <circle cx="12" cy="13.5" r="0.9" fill="#1D1D1B"/>
                                 </svg>
-                                <input type={`${show ? `text`: `password`}`} placeholder='Введите свой пароль' value={form.password} onChange={(e)=>setForm({...form, password:e.target.value})}/>
+                                <input 
+                                type={`${show ? `text`: `password`}`} placeholder='Введите свой пароль' 
+                                value={form.password} onChange={(e)=>setForm({...form, password:e.target.value})}
+                                autoComplete='true'/>
                                 <div className={cls.passShowIcon} onClick={handleShow}>
                                     {show ? 
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">

@@ -94,7 +94,7 @@ export const Modal = ({onClose}) =>{
                 {!status && 
                 <form className={cls.inputsValues}>
                     <div>
-                        <div className={error.name.length >0 && cls.errorName}>
+                        <div className={error.name.length >0 ? cls.errorName: ``}>
                             <input 
                                 type="text" 
                                 name='name' 

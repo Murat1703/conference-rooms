@@ -24,8 +24,7 @@ export const HallsPage = () =>{
     }
 
     useEffect(()=>{
-        loadHalls();
-        
+        loadHalls();        
     }, [])
 
 
@@ -43,7 +42,7 @@ export const HallsPage = () =>{
                     {loading && <Spinner />}
                     {halls.map((hallItem, index)=>{
                         return(
-                            <HallCard hall={hallItem}/>
+                            <HallCard hall={hallItem} key={index}/>
                         )
                     })}
                 </div>

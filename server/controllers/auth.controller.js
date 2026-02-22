@@ -48,8 +48,10 @@ export const logout = async (req, res) => {
 
 export const me = async (req, res, next) => {
   try {
+    if (!req.user) return res.json({message: "Не вошли в систему"});
+
     const user = await authService.findPublicById(req.user.id);
-    if (!user) return res.status(401).json({ message: "Unauthorized" });
+    // if (!user) return res.status(401).json({ message: "Unauthorized" });
     res.json({ user });
   } catch (e) {
     next(e);

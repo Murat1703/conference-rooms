@@ -280,6 +280,9 @@
     width: 100%;
     height: 100%;
 }
+.conferenceHallList > div > div > div:hover{
+    transform: translateY(-10px);
+}
 /* .conferenceHallItem{
     display: flex;
     flex-direction: column;
@@ -576,7 +579,9 @@
     .imageRowItemImgWrapper{
         overflow: hidden;
     }
-
+    .conferenceHallList > div > div > div:hover{
+        transform: translateY(-5px);
+    }
     .conferenceHallsContent{
         padding: 48px 0 24px 0;
         gap: 64px;

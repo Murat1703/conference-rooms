@@ -45,20 +45,23 @@ function App() {
 
   const [user, setUser] = useState(null);
 
-  const[loading, setLoading] = useState(true)
+  const[loading, setLoading] = useState(true);
+
+  const fetchUser = async () =>{
+    try{
+        const res = await apiMe();
+        // console.log('res, ',res)
+        if (res.data.message =="Не вошли в систему") return; else setUser(res.data)
+    } catch (err){
+        // console.log(err)
+        setUser(null)
+    } finally{
+        setLoading(false)
+    }
+  }
+
 
   useEffect(()=>{
-    const fetchUser = async () =>{
-      try{
-        const res = await apiMe();
-        setUser(res.data)
-        // console.log(res.data)
-      } catch (err){
-        setUser(null)
-      } finally{
-        setLoading(false)
-      }
-    }
     fetchUser();
   }, [])
 

@@ -140,10 +140,12 @@ export const HallPage = () =>{
         if (!bookingData.start_date) return;
         getBookingsDate(bookingData.start_date);
     }, [bookingData.start_date]);
-    console.log('bookingsByDate = ',bookingsByDate)
+    // console.log('bookingsByDate = ',bookingsByDate)
 
 
     const [isBooked, setIsBooked] = useState(false);
+
+    // console.log(isBooked)
 
     // const checkavailability = () =>{
         
@@ -154,13 +156,8 @@ export const HallPage = () =>{
 
     useEffect(()=>{
         if (!hall?.name) return;
-
         const booked = bookingsByDate.filter((b) => b.hall_name == hall?.name); 
-        console.log(booked)
-        // лучше по hall_id, а не по hall_name
-
         setIsBooked(booked);
-
     }, [bookingsByDate, hall?.name])
 
     const [today, setToday] = useState(null);
@@ -174,10 +171,25 @@ export const HallPage = () =>{
         seating_type: ""
     })
 
+    useEffect(()=>{
+    
+    }, [errForm])
+
+    const [err, setErr] = useState(false)
+
     const checkForm = () =>{
-        const isError = errForm.name.length  ==0 || errForm.phone.length ==0 || errForm.start_date.length ==0 || errForm.count.length ==0 || errForm.seating_type.length ==0;
+        const errors = {}
+        const isError = errForm.name  =="" || errForm.phone =="" || errForm.start_date == "" || errForm.count =="" || errForm.seating_type =="";
+        Object.entries(bookingData).map(([key, value])=>{
+            if (value === "") {
+                errors[key] = "Ошибка ввода";
+            }
+        })
+        setErrForm(errors);
+        setErr(isError);
         return isError;
     }
+
     return(
         <>
         <section>
@@ -432,11 +444,10 @@ export const HallPage = () =>{
                                         const y = d.getFullYear();
                                         const m = String(d.getMonth() + 1).padStart(2, "0");
                                         const day = String(d.getDate()).padStart(2, "0");
-
                                         const formatted = `${y}-${m}-${day}`
-
                                         setBookingData((prev)=>({...prev, start_date: formatted}));
-                                        setErrForm((prev)=>({...prev, start_date: formatted}))
+                                        if (!d ){
+                                        setErrForm((prev)=>({...prev, start_date: "Ошибка даты"}))}
                                     }}
                                     minDate={new Date()}
                                     placeholderText="Выберите дату"
@@ -446,7 +457,8 @@ export const HallPage = () =>{
                                     locale={ru}
                                 />
                                 <span>Дата</span>
-
+                                {/* {console.log(errForm)} */}
+                                {errForm.start_date !=="" && <span className={cls.errText}>{errForm.start_date}</span>}
                             </div>
                             <div className={cls.hallsPageValuesItem}>
                                 <span>Ваше имя</span>
@@ -454,9 +466,10 @@ export const HallPage = () =>{
                                     type="text" 
                                     value={bookingData.name}
                                     onChange={(e)=>{setBookingData(prev=>({...prev, name: e.target.value}));
-                                    setErrForm(prev=>({...prev, name: e.target.value}));
+                                    if (e.target.value == "") setErrForm(prev=>({...prev, name: "Ошибка ввода имени"}));
                                     }}
                                 />
+                                {errForm.name !== "" && <span className={cls.errText}>{errForm.name}</span>}
                             </div>
                             <div className={cls.hallsPageValuesItem}>
                                 <span>Контактный номер</span>
@@ -466,9 +479,10 @@ export const HallPage = () =>{
                                     ref={phoneMask}
                                     value={bookingData.phone}
                                     onChange={(e)=>{setBookingData(prev=>({...prev, phone: e.target.value}));
-                                    setErrForm(prev=>({...prev, phone: e.target.value}));
+                                    
                                     }}
                                 />
+                                {errForm.phone !== "" && <span className={cls.errText}>{errForm.phone}</span>}
                             </div>
                             <div className={`${cls.hallsPagePriceDuration} ${cls.hallsPageValuesItem}`}>
                                 <span>Продолжительность</span>
@@ -491,14 +505,17 @@ export const HallPage = () =>{
                                     type="number" 
                                     value={bookingData.count}
                                     onChange={(e)=>{setBookingData((prev)=>({...prev, count: e.target.value}));
-                                    setErrForm((prev)=>({...prev, count: e.target.value}));}}
+                                    }}
                                 />
+                                {/* {errForm.count !=='' && <span className={cls.errText}>Введите количество гостей</span>} */}
                             </div>
                             <div className={cls.hallsPageValuesItem}>
                                 <span>Тип рассадки</span>
                                 <div className={cls.hallsSitType} onClick={()=>setShowArrangementTypes(!showArrangementTypes)}>
                                     <div className={cls.hallsSeatingArrangement}>
                                         <p>{!type ? `Выберите тип рассадки`: type}</p>
+                                        {/* {!type && setErrForm(prev=>({...prev, seating_type: "Выберите тип рассадки"}))}
+                                        {errForm.seating_type.length ==0 && <span className={cls.errText}>Выберите рассадку</span>} */}
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" style={{
                                             rotate: showArrangementTypes && "180deg"
                                         }}>
@@ -528,8 +545,8 @@ export const HallPage = () =>{
                             </div>
                             <Button action={()=>{
                                 console.log(checkForm())
-                                if (checkForm()==true) {console.log('jib,rf');return};
-                                createBooking(bookingData)
+                                console.log(err)
+                                if (err==true) {console.log('Заполните все поля');return} else if (isBooked.length > 0)                         createBooking(bookingData)
                             }}>
                                 <p>Отправить заявку </p>
                             </Button>
