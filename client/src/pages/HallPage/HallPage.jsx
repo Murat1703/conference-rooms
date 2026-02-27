@@ -1,7 +1,5 @@
 import cls from './HallPage.module.css'
 import { useState, useEffect } from 'react';
-import { getHall } from '../../api/halls.api.js';
-import { getHalsGallery } from '../../api/halls.gallery.api.js';
 import { useParams } from "react-router-dom";
 import { Swiper, SwiperSlide } from 'swiper/react';
 // Import Swiper styles
@@ -9,8 +7,6 @@ import 'swiper/css';
 import 'swiper/css/free-mode';
 import 'swiper/css/navigation';
 import 'swiper/css/thumbs';
-
-// import required modules
 import { FreeMode, Navigation, Thumbs } from 'swiper/modules';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -26,64 +22,48 @@ import img3 from '../HomePage/images/conference/3.avif'
 import img4 from '../HomePage/images/conference/4.webp'
 import img5 from '../HomePage/images/conference/5.webp'
 import { useMask } from '@react-input/mask';
-import { Modal } from '../../components/Modal';
-import { addBooking, getBookings,  getBookingByDate } from '../../api/booking.api.js';
-
-
+import { useHall } from '../../hooks/useHall.js';
+import { useBookingByDate } from '../../hooks/useBookingByDate.js';
+import { useBookingForm } from '../../hooks/useBookingForm.js';
 
 export const HallPage = () =>{
 
     const { id } = useParams();
 
-    const [hall, setHall] = useState([]);
-    const [loading, setLoading] = useState(true);
-
-    const [galleryFromServer, setGalleryFromServer] = useState([]);
-
-    const loadHall = async (id) =>{
-        try{
-            const res = await getHall(id);
-            const imageURLS  = await getHalsGallery(id);
-            setHall(res.data);
-            console.log(res.data)
-            setGalleryFromServer(imageURLS.data.items)
-        }
-        catch(err){
-            console.error("Ошибка загрузки событий", err);
-        }
-        finally {
-            setLoading(false)
-        }
-    }
-
+    const h = useHall(id);
 
     useEffect(()=>{
-        loadHall(id);        
         const todayIs = new Date();
         const y = todayIs.getFullYear();
         const m = String(todayIs.getMonth() + 1).padStart(2, "0");
         const day = String(todayIs.getDate()).padStart(2, "0");
         const formatted = `${y}-${m}-${day}`;
-
         setToday(formatted);
-        setBookingData((prev) => ({ ...prev, start_date: formatted }));
-
-        getBookingsDate(formatted);
-
+        // setBookingData((prev) => ({ ...prev, start_date: formatted }));
     }, [])
 
     const [thumbsSwiper, setThumbsSwiper] = useState(null);
-    const [date, setDate] = useState(null);
+    const [today, setToday] = useState(null);
 
-    const [duration, setDuration] = useState(1);
+    const booking = useBookingForm({
+        hallId: id,
+        initialDateStr: "", // старт пустой, ниже подставим today
+        onSuccess: () => {
+            // после успешной брони можно обновить доступность (оно само обновится, т.к. дата та же)
+            // если нужно — можно сбросить форму:
+            // booking.reset();
+        },
+    });
 
-    const handleSetDuration = (e) =>{
-        setDuration(e)
-    }
+    useEffect(() => {
+        if (!today) return;
+        // если дата ещё не установлена — ставим today
+        if (!booking.bookingData.start_date) {
+            booking.setField("start_date", today);
+        }
+    }, [today]); // eslint-disable-line
 
-    const [showArrangementTypes, setShowArrangementTypes] = useState(false);
 
-    const [type, setType] = useState(null)
 
     const isMobile = useMediaQuery({ maxWidth: 768 });
 
@@ -94,108 +74,18 @@ export const HallPage = () =>{
         replacement: { _: /\d/ },
     });
 
-    const [bookingData, setBookingData]= useState({
-        name: "", 
-        phone: "", 
-        start_date: "", 
-        count: "",
-        seating_type: "", 
-        hall_id: id
-    });
+    const { bookingsByDate, loadingAvailibility } = useBookingByDate(booking.bookingData.start_date);
 
-    const createBooking = async (data) =>{
-        try{
-            console.log('HALLDATA-',data)
-            const fd = new FormData();
-            fd.append("name", data.name);
-            fd.append("phone", data.phone); // строка
-            fd.append("start_date", String(data.start_date))
-            fd.append("count", String(Number(data.count)));
-            fd.append("seating_type", data.seating_type);
-            fd.append("hall_id", data.hall_id);
-            const res = await addBooking(fd); 
-            const bookingID = res.data?.id; // <-- важно
-            console.log('АЙДИ КОМНАТЫ. = ',bookingID);
-            await getBookings();
-        } catch (err){
-            console.log(err)
-        }
-    }
-
-    const [bookingsByDate, setBookingsByDate] =useState([]);
-
-    const [loadingAvailibility, setLoadingAvailibility]= useState(true)
-
-    const getBookingsDate = async (date) => {
-        try{
-            const res = await  getBookingByDate(date);
-            setBookingsByDate(res.data);
-            setLoadingAvailibility(false)
-        }catch (err){
-            console.log(err)
-        }
-    }
-
-    useEffect(() => {
-        if (!bookingData.start_date) return;
-        getBookingsDate(bookingData.start_date);
-    }, [bookingData.start_date]);
-    // console.log('bookingsByDate = ',bookingsByDate)
-
-
-    const [isBooked, setIsBooked] = useState(false);
-
-    // console.log(isBooked)
-
-    // const checkavailability = () =>{
-        
-    //     const b = bookingsByDate?.filter(b => b.hall_name === hall?.name);
-    //     console.log('b = = = =',b)
-    //     b.length > 0? setIsBooked(true) : setIsBooked(false) 
-    // }
-
-    useEffect(()=>{
-        if (!hall?.name) return;
-        const booked = bookingsByDate.filter((b) => b.hall_name == hall?.name); 
-        setIsBooked(booked);
-    }, [bookingsByDate, hall?.name])
-
-    const [today, setToday] = useState(null);
-
-
-    const [errForm, setErrForm] = useState({
-        name: "", 
-        phone: "", 
-        start_date: "", 
-        count: "",
-        seating_type: ""
-    })
-
-    useEffect(()=>{
-    
-    }, [errForm])
-
-    const [err, setErr] = useState(false)
-
-    const checkForm = () =>{
-        const errors = {}
-        const isError = errForm.name  =="" || errForm.phone =="" || errForm.start_date == "" || errForm.count =="" || errForm.seating_type =="";
-        Object.entries(bookingData).map(([key, value])=>{
-            if (value === "") {
-                errors[key] = "Ошибка ввода";
-            }
-        })
-        setErrForm(errors);
-        setErr(isError);
-        return isError;
-    }
+    const isBooked = (bookingsByDate ?? []).some(
+        (b) => b.hall_name === h?.hall?.name
+    );   
 
     return(
         <>
         <section>
             <div className={cls.hallsPageContent}>
                 <div className={cls.hallsPageGallery}>
-                    {galleryFromServer.length == 0 ?
+                    {h.gallery.length == 0 ?
                     <>
                         <Swiper
                             style={{
@@ -263,7 +153,7 @@ export const HallPage = () =>{
                             modules={[FreeMode, Thumbs]}
                             className="mySwiper2"
                         >
-                            {galleryFromServer.map((img, index)=>{
+                            {h.gallery.map((img, index)=>{
                                 return(
                                 <SwiperSlide key={index}>
                                     <img src={img.image_url} alt='galleryImg' />
@@ -281,7 +171,7 @@ export const HallPage = () =>{
                             className="mySwiper"
                         >
 
-                            {galleryFromServer.map((img, index)=>{
+                            {h?.gallery.map((img, index)=>{
                                 return(
                                 <SwiperSlide key={index}>
                                     <img src={img.image_url} alt='thumbImg' />
@@ -299,12 +189,12 @@ export const HallPage = () =>{
                         <div className={cls.hallsPageTopBlock}>
                             <div className={cls.hallsPageInfoTitleBlock}>
                                 <p>Конференц-зал</p>
-                                <h3>{hall?.name}</h3>
+                                <h3>{h?.hall?.name}</h3>
                             </div>
                             <div className={cls.availibilityBlock}>
-                                <span>{bookingData?.start_date || today}</span>
-                                <span className={loadingAvailibility?"" :isBooked.length > 0? cls.hallIsBooked: cls.hallIsfree}>
-                                    {loadingAvailibility ? `Проверяем доступность` : isBooked.length > 0?`Занято`:`Свободно`}
+                                <span>{booking.bookingData?.start_date || today}</span>
+                                <span className={loadingAvailibility ? "" : isBooked ? cls.hallIsBooked : cls.hallIsfree}>
+                                    {loadingAvailibility ? "Проверяем доступность" : isBooked ? "Занято" : "Свободно"}
                                 </span>
                             </div>
                         </div>
@@ -328,7 +218,7 @@ export const HallPage = () =>{
                                     </div>
                                     <div className={cls.hallsSpecificationText}>
                                         <p>Площадь</p>
-                                        <p>{hall?.area_m2} м²</p>
+                                        <p>{h?.hall?.area_m2} м²</p>
                                     </div>
                                 </div>
                                 <div className={cls.hallsSpecificationItem}>
@@ -342,7 +232,7 @@ export const HallPage = () =>{
                                     </div>
                                     <div className={cls.hallsSpecificationText}>
                                         <p>Вместимость</p>
-                                        <p>До {hall?.capacity} человек</p>
+                                        <p>До {h?.hall?.capacity} человек</p>
                                     </div>
                                 </div>
                                 <div className={cls.hallsSpecificationItem}>
@@ -436,8 +326,10 @@ export const HallPage = () =>{
                         </div>
                         {!isMobile && 
                         <div className={cls.hallsPagePrice}>
+                            {!booking.sent && 
+                            <>
                             <div className={`${cls.hallsPageDate}  ${cls.hallsPageValuesItem}`}>
-                                <DatePicker
+                                {/* <DatePicker
                                     selected={date}
                                     onChange={(d) => {
                                         setDate(d); 
@@ -455,21 +347,29 @@ export const HallPage = () =>{
                                     className="dateInput"
                                     popperPlacement="top-start"
                                     locale={ru}
+                                /> */}
+                                <DatePicker
+                                    selected={booking.dateObj}
+                                    onChange={booking.setDate}
+                                    minDate={new Date()}
+                                    placeholderText="Выберите дату"
+                                    dateFormat="dd.MM.yyyy"
+                                    className="dateInput"
+                                    popperPlacement="top-start"
+                                    locale={ru}
                                 />
                                 <span>Дата</span>
                                 {/* {console.log(errForm)} */}
-                                {errForm.start_date !=="" && <span className={cls.errText}>{errForm.start_date}</span>}
+                                {booking.errors.start_date !=="" && <span className={cls.errText}>{booking.errors.start_date}</span>}
                             </div>
                             <div className={cls.hallsPageValuesItem}>
                                 <span>Ваше имя</span>
                                 <input 
                                     type="text" 
-                                    value={bookingData.name}
-                                    onChange={(e)=>{setBookingData(prev=>({...prev, name: e.target.value}));
-                                    if (e.target.value == "") setErrForm(prev=>({...prev, name: "Ошибка ввода имени"}));
-                                    }}
+                                    value={booking.bookingData.name}
+                                    onChange={(e) => booking.setField("name", e.target.value)}
                                 />
-                                {errForm.name !== "" && <span className={cls.errText}>{errForm.name}</span>}
+                                {booking.errors.name !== "" && <span className={cls.errText}>{booking.errors.name}</span>}
                             </div>
                             <div className={cls.hallsPageValuesItem}>
                                 <span>Контактный номер</span>
@@ -477,24 +377,22 @@ export const HallPage = () =>{
                                     type="text" 
                                     name='phone'
                                     ref={phoneMask}
-                                    value={bookingData.phone}
-                                    onChange={(e)=>{setBookingData(prev=>({...prev, phone: e.target.value}));
-                                    
-                                    }}
+                                    value={booking.bookingData.phone}
+                                    onChange={(e) => booking.setField("phone", e.target.value)}
                                 />
-                                {errForm.phone !== "" && <span className={cls.errText}>{errForm.phone}</span>}
+                                {booking.errors.phone !== "" && <span className={cls.errText}>{booking.errors.phone}</span>}
                             </div>
                             <div className={`${cls.hallsPagePriceDuration} ${cls.hallsPageValuesItem}`}>
                                 <span>Продолжительность</span>
-                                <div className={cls.durationItem} onClick={()=>handleSetDuration(0.5)}>
+                                <div className={cls.durationItem} onClick={()=>booking.setDuration(0.5)}>
                                     <div>
-                                        {duration === 0.5 && <span></span>}
+                                        {booking.duration === 0.5 && <span></span>}
                                     </div>
                                     <p>Пол дня</p>
                                 </div>
-                                <div className={cls.durationItem} onClick={()=>handleSetDuration(1)}>
+                                <div className={cls.durationItem} onClick={()=>booking.setDuration(1)}>
                                     <div>
-                                        {duration === 1 && <span></span>}
+                                        {booking.duration === 1 && <span></span>}
                                     </div>
                                     <p>Целый день</p>
                                 </div>
@@ -503,53 +401,69 @@ export const HallPage = () =>{
                                 <span>Количество гостей</span>
                                 <input 
                                     type="number" 
-                                    value={bookingData.count}
-                                    onChange={(e)=>{setBookingData((prev)=>({...prev, count: e.target.value}));
+                                    value={booking.bookingData.count}
+                                    onChange={(e)=>{booking.setField("count", e.target.value)
                                     }}
                                 />
-                                {/* {errForm.count !=='' && <span className={cls.errText}>Введите количество гостей</span>} */}
+                                {booking.errors.count && <span className={cls.errText}>{booking.errors.count}</span>}
                             </div>
                             <div className={cls.hallsPageValuesItem}>
                                 <span>Тип рассадки</span>
-                                <div className={cls.hallsSitType} onClick={()=>setShowArrangementTypes(!showArrangementTypes)}>
+                                <div className={cls.hallsSitType} onClick={()=>booking.setShowArrangementTypes(!booking.showArrangementTypes)}>
                                     <div className={cls.hallsSeatingArrangement}>
-                                        <p>{!type ? `Выберите тип рассадки`: type}</p>
+                                        <p>{!booking.type ? `Выберите тип рассадки`: booking.type}</p>
                                         {/* {!type && setErrForm(prev=>({...prev, seating_type: "Выберите тип рассадки"}))}
                                         {errForm.seating_type.length ==0 && <span className={cls.errText}>Выберите рассадку</span>} */}
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" style={{
-                                            rotate: showArrangementTypes && "180deg"
+                                            rotate: booking.showArrangementTypes && "180deg"
                                         }}>
                                         <path d="M6 9l6 6 6-6" stroke="#1D1D1B" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
                                         </svg>
 
                                     </div>
-                                    {showArrangementTypes &&
+                                    {booking.showArrangementTypes &&
                                     <ul className={cls.arrangementTypesList}>
-                                        <li onClick={()=>{setType('Театральная'); setBookingData((prev)=>({...prev, seating_type: "Театральная"}));
-                                        setErrForm((prev)=>({...prev, seating_type: "Театральная"}))
-                                        }}>Театральная</li>
-                                        <li onClick={()=>{setType('С Партами');setBookingData((prev)=>({...prev, seating_type: "С Партами"}));
-                                        setErrForm((prev)=>({...prev, seating_type: "С Партами"}))
-                                        }}>С Партами</li>
-                                        <li onClick={()=>{setType('Островками');setBookingData((prev)=>({...prev, seating_type: "Островками"}));
-                                        setErrForm((prev)=>({...prev, seating_type: "Островками"}))}}>Островками</li>
-                                        <li onClick={()=>{setType('П-образная'); setBookingData((prev)=>({...prev, seating_type: "П-образная"}));
-                                        setErrForm((prev)=>({...prev, seating_type: "П-образная"}))
-                                        }}>П-образная</li>
+                                        <li onClick={() => booking.setSeating("Театральная")}>Театральная</li>
+                                        <li onClick={() => booking.setSeating("С Партами")}>С Партами</li>
+                                        <li onClick={()=>{booking.setSeating("Островками")}}>Островками</li>
+                                        <li onClick={()=>{booking.setSeating("П-образная")}}>П-образная</li>
                                     </ul>}
                                 </div>
                             </div>
                             <div className={cls.priceInfo}>
                                 <p>Стоимость аренды</p>
-                                <p>{hall.price} тг</p>
+                                <p>{h?.hall?.price} тг</p>
                             </div>
                             <Button action={()=>{
-                                console.log(checkForm())
-                                console.log(err)
-                                if (err==true) {console.log('Заполните все поля');return} else if (isBooked.length > 0)                         createBooking(bookingData)
+                                booking.submit({ preventIfBooked: true, isBooked })
                             }}>
                                 <p>Отправить заявку </p>
                             </Button>
+                            </>
+                            }
+                            {booking.sent && <div className={cls.sendInfo}>
+                                <p>Спасибо! Вы отправили заявку по данным. Наш менеджер свяжется с вами в ближайшее время</p>
+                                <ul>
+                                    <li>
+                                        <p>Имя:</p>
+                                        <p>{booking.bookingData.name}</p>
+                                    </li>
+                                    <li>
+                                        <p>Контактный номер:</p>
+                                        <p>{booking.bookingData.phone}</p>
+                                    </li>
+                                    <li>
+                                        <p>Дата мероприятия:</p>
+                                        <p>{booking.bookingData.start_date}</p>
+                                    </li>
+                                    <li>
+                                        <p>Количество гостей:</p>
+                                        <p>{booking.bookingData.count}</p>
+                                    </li>
+
+                                </ul>
+                            </div>}
+                            { booking.loading && `....Loading ...`}
                         </div>}
 
                     </div>
@@ -563,12 +477,11 @@ export const HallPage = () =>{
                 <p>Забронировать</p>
             </button>
         </div>}
-        {isMobile && showModal && <BookingModal 
+        {isMobile && showModal &&<BookingModal 
             onClose={()=>setShowModal(false)}
-            hall={hall}
-            createBooking={createBooking}
-            bookingData={bookingData}
-            setBookingData={setBookingData}
+            hall={h.hall}
+            booking={booking}
+            isBooked={isBooked}
         />}
         </>
     )

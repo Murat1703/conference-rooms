@@ -18,11 +18,11 @@ import 'swiper/css';
 import {Navigation} from 'swiper/modules'
 import { ConsultationSection } from '../../components/ConsultationSection'
 import { useMediaQuery } from 'react-responsive'
-import { getHalls } from '../../api/halls.api.js'
 import { HallCard } from '../../components/HallCard'
 import { Modal } from '../../components/Modal/Modal.jsx'
 import { AnimatePresence } from 'motion/react'
 import { Spinner } from '../../components/Spinner/Spinner.jsx'
+import { useHalls } from '../../hooks/useHalls.js'
 
 export const HomePage = ()=>{
 
@@ -31,7 +31,6 @@ export const HomePage = ()=>{
 
     const handleSetActiveBigImg = (id) =>{
         setIsActive(id);
-        // setIsShow(!isShow)
     }
 
     const Advantages = [
@@ -45,34 +44,13 @@ export const HomePage = ()=>{
 
     const isMobile = useMediaQuery({ maxWidth: 768 });
 
-    const [halls, setHalls] = useState([]);
-    const [loading, setLoading] = useState(true);
-
-    const loadHalls = async () =>{
-        try{
-            const res = await getHalls();
-            setHalls(res.data);
-        }
-        catch(err){
-            console.error("Ошибка загрузки событий", err);
-        }
-        finally {
-            setLoading(false)
-        }
-    }
-
-    useEffect(()=>{
-        loadHalls();
-    }, [])
-
-    // console.log(halls)
+    const { halls, loading } = useHalls();
 
     const [showModal, setShowModal] = useState(false);
 
     return(
         <>
         <section className={cls.homePageWrapper}>
-            {/* <img src={ai} alt='img'/> */}
             <div className={cls.homePageContent} onClick={()=>{
                 setIsActive(null);
                 setIsShow(null)
@@ -331,7 +309,7 @@ export const HomePage = ()=>{
                         }}
 
                     >
-                        {halls?.map((hall, index)=>{
+                        {!loading && halls.map((hall, index)=>{
                             return(
                                 <SwiperSlide key={hall.id}>
                                     <HallCard  hall={hall}/>

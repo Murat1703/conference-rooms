@@ -1,0 +1,35 @@
+.bookingModalWrapper{
+    width: 100%;
+    height: 100dvh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: #0000007a;
+    backdrop-filter: blur(6px);
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.bookingModalInner{
+    padding: 24px 32px;
+    background: var(--bg-primary);
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+.bookingModalValues{
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+.bookingModalValue{
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+.bookingModalValue > input{
+    padding: 6px 12px;
+    width: 100%;
+    background: #fff;
+}

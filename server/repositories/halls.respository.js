@@ -2,7 +2,7 @@ import { pool } from "../db/db.js";
 
 export const getHalls = async () =>{
     const {rows} = await pool.query(
-        "SELECT * FROM halls ORDER BY created_at ASC"
+        "SELECT * FROM halls ORDER BY name ASC"
     );
     return rows
 }

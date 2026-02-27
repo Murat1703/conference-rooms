@@ -61,9 +61,6 @@ export const Modal = ({onClose}) =>{
 
     }
 
-    {console.log('data',data)}
-    {console.log('error',error)}
-
 
     return(
         <div className={cls.modalWrapper} onClick={onClose}

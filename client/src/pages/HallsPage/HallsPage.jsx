@@ -4,6 +4,8 @@ import { HallCard } from '../../components/HallCard';
 import { Description } from '../../components/Description';
 import { getHalls } from '../../api/halls.api.js';
 import { Spinner } from '../../components/Spinner/Spinner.jsx';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
 
 export const HallsPage = () =>{
 
@@ -40,11 +42,33 @@ export const HallsPage = () =>{
                 </div>
                 <div className={cls.hallsPageList}>
                     {loading && <Spinner />}
+                    <Swiper
+                        slidesPerView={4}
+                        spaceBetween={64}
+                        breakpoints={{
+                            0: {
+                                slidesPerView: 1.25,
+                                spaceBetween: 24
+                            },
+                            500: {
+                                slidesPerView : 2.4,
+                                spaceBetween: 32
+                            },
+                            760: {
+                                slidesPerView : 4,
+                                spaceBetween: 64
+
+                            }
+                        }}
+                    >
                     {halls.map((hallItem, index)=>{
                         return(
-                            <HallCard hall={hallItem} key={index}/>
+                                <SwiperSlide>
+                                    <HallCard hall={hallItem} key={index}/>
+                                </SwiperSlide>
                         )
                     })}
+                    </Swiper>
                 </div>
             </div>
         </section>

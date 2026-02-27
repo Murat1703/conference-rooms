@@ -2,7 +2,7 @@ import cls from './RoomModal.module.css'
 import { useState, useEffect } from 'react'
 import { deleteGalleryItem } from '../../../../../../api/halls.gallery.api.js'
 
-export const RoomModal = ({modalType, hallData, closeModal ,setHallData, onAdd, onEdit, setGallery,setGalleryNewFiles, galleryNewFiles, gallery
+export const RoomModal = ({modalType, hallData, closeModal ,setHallData, onAdd, onEdit, setGallery,setGalleryNewFiles, galleryNewFiles, gallery, reload
 }) =>{
     
     const handleSubmit = () =>{

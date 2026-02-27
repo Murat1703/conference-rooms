@@ -103,10 +103,11 @@
     width: 100%;
     padding: 16px 24px;
     border-bottom: 1px solid var(--border-default);
-    color: var(--text-color-primary);
+    color: var(--text-color-primary)!important;
 }
 .loginPageValues > div > input:focus{
     border-bottom: 1px solid var(--border-hover);
+    color: var(--text-color-primary)!important;;
 }
 .loginPageValues > div:focus-within svg{
     opacity: .8;

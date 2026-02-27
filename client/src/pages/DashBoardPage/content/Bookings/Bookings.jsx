@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { getBookings, getBookingsWithHall, deleteBooking } from '../../../../api/booking.api.js';
 import { getHalls } from '../../../../api/halls.api.js';
 import { Spinner } from '../../../../components/Spinner/Spinner.jsx';
+import { BookingModal } from './BookingModal.jsx';
 
 export const Bookings = () =>{
 
@@ -36,16 +37,25 @@ export const Bookings = () =>{
         try {
             await deleteBooking(id); // твой API вызов
             setBookingsHall(bookingsHall => bookingsHall.filter(item => item.id !== id)); 
-            
         } catch (err) {
             console.error("Ошибка удаления", err);
         }
     };
 
+    const [showModal, setShowModal] = useState(false);
+
+    const handleModal = () =>{
+        setShowModal(!showModal)
+    }
+
 
     return(
+        <>
         <div className={cls.bookingsInner}>
-            <button className={cls.bookingBtn}>
+            <button 
+                className={cls.bookingBtn} 
+                onClick={handleModal}
+            >
                 <p>Добавить бронь</p>
             </button>
             <div className={cls.bookingTable}>
@@ -111,5 +121,7 @@ export const Bookings = () =>{
             </table> */}
 
         </div>
+        {showModal && <BookingModal  close={()=>setShowModal(false)}/>}
+        </>
     )
 }
