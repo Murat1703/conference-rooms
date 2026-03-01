@@ -9,14 +9,26 @@ export const getBooking = async (req, res, next) => {
   }
 };
 
-export const getBookingWithHallName = async(req, res, next) =>{
+// export const getBookingWithHallName = async(req, res, next) =>{
+//   try {
+//     const bookings = await bookingServices.getBookingsWithHallName();
+//     res.json(bookings);
+//   } catch (err) {
+//     next(err);
+//   }
+// }
+
+export const getBookingsWithHallName = async (req, res, next) => {
   try {
-    const bookings = await bookingServices.getBookingsWithHallName();
-    res.json(bookings);
+    const { page, limit } = req.query;
+
+    const data = await bookingServices.getBookingsWithHallName({ page, limit });
+
+    res.json(data);
   } catch (err) {
     next(err);
   }
-}
+};
 
 export const getBookingById = async (req, res, next) => {
   try {

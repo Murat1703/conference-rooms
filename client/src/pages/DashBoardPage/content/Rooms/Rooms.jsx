@@ -10,85 +10,9 @@ export const Rooms = () =>{
 
     const [activeID, setActiveID] = useState(null);
 
-    useEffect(()=>{},[activeID])
-
-
     const {halls, loading, reload, createHall, deleteItem, updateItem} = useHalls();
+
     const {hall, gallery, setGallery} = useHall(activeID);
-
-    // const [halls, setHalls]= useState(null);
-
-    // const[loading, setLoading] = useState(true)
-
-    // const loadingHalls = async () =>{
-    //   try{
-    //     const res = await getHalls();
-    //     setHalls(res.data)
-    //     // console.log(res.data)
-    //   } catch (err){
-    //     setHalls(null)
-    //   } finally{
-    //     setLoading(false)
-    //   }
-    // }
-
-    // useEffect(()=>{
-    //     loadingHalls();
-    // }, []);
-
-
-    // const createHall = async (hallData) =>{
-    //     try{
-    //         console.log('HALLDATA-',hallData)
-    //         const fd = new FormData();
-    //         fd.append("name", hallData.name);
-    //         fd.append("area_m2", String(Number(hallData.area_m2))); // строка
-    //         fd.append("capacity", String(Number(hallData.capacity)));
-    //         fd.append("price", String(Number(hallData.price)));
-
-    //         const res = await addHall(fd); 
-    //         const hallID = res.data?.id; // <-- важно
-    //         console.log('АЙДИ КОМНАТЫ. = ',hallID);
-
-    //         const gfd = new FormData();
-    //         const localItems = gallery.filter(item => item.status === "local");
-
-
-    //         const localFiles = localItems
-    //             .map(item => item.file ?? item)   // если item = {file: File}, берём item.file, иначе item
-    //             .filter(f => f instanceof File);  // страхуемся
-
-
-    //         if (localFiles.length===0) {
-
-    //             return
-            
-    //             } else {
-    //                 localFiles.forEach((file) => {
-    //                     gfd.append("gallery", file); 
-    //                 });
-
-    //                 console.log('gfd = ',gfd)
-    //             await addGallery(hallID,gfd);
-    //             setGallery([]);
-    //         } 
-
-    //         await loadingHalls();
-
-
-    //     } catch (err){
-    //         console.log(err)
-    //     }
-    // }
-
-    // const handleDeleteItem = async (id) => {
-    //     try {
-    //         await deleteHall(id); // твой API вызов
-    //         setHalls(halls => halls.filter(hall => hall.id !== id)); 
-    //     } catch (err) {
-    //         console.error("Ошибка удаления", err);
-    //     }
-    // };
 
     const [modalType, setModalType] = useState(null);
 
@@ -101,78 +25,24 @@ export const Rooms = () =>{
         price: "",
     });
 
-
     const handleGetHall =  (id) => {
-        
-        //   const res =  await getHall(id); // твой API вызов
-        //   console.log(res.data);
-            setActiveID(id);
-            setShowModal(true);
-            setModalType('edit');
-            // const getGallery = await getHalsGallery(id);
-            // console.log(getGallery.data)
-            // setGallery(getGallery.data.items)
+        setActiveID(id);
+        setShowModal(true);
+        setModalType('edit');
     }
 
-
-
     useEffect(()=>{
-        if (!hall) return;
+        if (modalType !== "edit" || !hall) return;
         setHallData({
-                name: hall.name,
-                area_m2: hall.area_m2,
-                capacity: hall.capacity,
-                price: hall.price,
+            name: hall.name ?? "",
+            area_m2: hall.area_m2 ?? "",
+            capacity: hall.capacity ?? "",
+            price: hall.price ?? "",
         });
-    }, [hall])
-
-
-    // const updateHallItem= async (id, hallData) =>{
-    //     try {
-    //         const fd = new FormData();
-    //         fd.append("name", hallData.name);
-    //         fd.append("area_m2", hallData.area_m2);
-    //         fd.append("capacity", hallData.capacity);
-    //         fd.append("price", hallData.price);
-
-    //         const hallID = id; // <-- важно
-    //         console.log('АЙДИ КОМНАТЫ. = ',hallID);
-
-    //         const gfd = new FormData();
-    //         const localItems = gallery.filter(item => item.status === "local");
-
-
-    //         const localFiles = localItems
-    //             .map(item => item.file ?? item)   // если item = {file: File}, берём item.file, иначе item
-    //             .filter(f => f instanceof File);  // страхуемся
-
-
-    //         if (localFiles.length===0) {
-
-    //             return
-            
-    //             } else {
-    //                 localFiles.forEach((file) => {
-    //                     gfd.append("gallery", file); 
-    //                 });
-
-    //                 console.log('gfd = ',gfd)
-    //             await addGallery(hallID,gfd);
-
-    //             setGallery([]);
-    //         } 
-
-
-    //         await updateHall(id, fd); 
-
-
-    //         await loadingHalls();
-    //     } catch (err) {
-    //         console.error("Ошибка Добавления", err);
-    //     }
-    // }
+    }, [hall, modalType])
 
     const handleAddHallItem = () =>{
+        setActiveID(null)
         setShowModal(true);
         setModalType("add");
         setHallData({
@@ -184,7 +54,6 @@ export const Rooms = () =>{
         setGallery([])
     }
     
-    // const [gallery, setGallery] = useState([]);
     const [galleryNewFiles, setGalleryNewFiles] = useState([]);
 
 

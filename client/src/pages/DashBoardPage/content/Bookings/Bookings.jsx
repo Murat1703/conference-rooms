@@ -1,46 +1,17 @@
 import cls from './Bookings.module.css'
 import { useEffect, useState } from 'react';
-import { getBookings, getBookingsWithHall, deleteBooking } from '../../../../api/booking.api.js';
-import { getHalls } from '../../../../api/halls.api.js';
 import { Spinner } from '../../../../components/Spinner/Spinner.jsx';
 import { BookingModal } from './BookingModal.jsx';
+import { useBookingsHallName } from '../../../../hooks/useBookingsHallName.js';
 
 export const Bookings = () =>{
 
-    const [loading, setLoading] = useState(true);
 
-
-    const [bookingsHall, setBookingsHall] = useState(null);
-
-    const getBookingsHallName = async () =>{
-        try{
-            const res = await getBookingsWithHall();
-            setBookingsHall(res.data);
-        }
-        catch(err){
-            console.error("Ошибка загрузки броней", err);
-        }
-        finally {
-            setLoading(false)
-        }
-    }
-
-    console.log('BOOKINGWITHHALL: ',bookingsHall)
+    const {bookingsHall, loading, deleteItem, page, setPage, limit, setLimit, total, totalPages} = useBookingsHallName();
 
     
-    useEffect(()=>{
-        getBookingsHallName();
-    }, [])
 
-
-    const handleDeleteItem = async (id) => {
-        try {
-            await deleteBooking(id); // твой API вызов
-            setBookingsHall(bookingsHall => bookingsHall.filter(item => item.id !== id)); 
-        } catch (err) {
-            console.error("Ошибка удаления", err);
-        }
-    };
+    console.log('BOOKINGWITHHALL: ',bookingsHall)
 
     const [showModal, setShowModal] = useState(false);
 
@@ -75,7 +46,7 @@ export const Bookings = () =>{
                         // loadHallName(booking.hall_id);
                         // console.log(booking.hall_id, 'ROOM : ', activeHall)
                         return (
-                            <div className={cls.bookingItem} key={index}>
+                            <div className={cls.bookingItem} key={booking.id}>
                                 <p>{booking.hall_name}</p>
                                 <p>{booking.name}</p>
                                 <p>{booking.phone}</p>
@@ -85,12 +56,26 @@ export const Bookings = () =>{
                                 <p>{booking.status}</p>
                                 <div className={cls.itemButtons}>
                                     <button>Edit</button>
-                                    <button onClick={()=>handleDeleteItem(booking.id)}>Delete</button>
+                                    <button onClick={()=>deleteItem(booking.id)}>Delete</button>
                                 </div>
                             </div>
                         )
                     })}
                 </div>
+            </div>
+            <div className={cls.bookingTablePagination}>
+                {Array.from({ length: totalPages }, (_, i) => i + 1)
+                .slice(Math.max(0, page - 3), Math.min(totalPages, page + 2))
+                .map((p) => (
+                    <button
+                        key={p}
+                        className={p === page ? cls.activePage : ""}
+                        disabled={loading}
+                        onClick={() => setPage(p)}
+                    >
+                        {p}
+                    </button>
+                ))}
             </div>
             {/* <table>
                 <thead>

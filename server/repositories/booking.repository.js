@@ -7,8 +7,10 @@ export const getBookings = async () =>{
     return rows
 }
 
-export const getBookingWithHallName = async () =>{
-    const {rows} = await pool.query(
+export const getBookingWithHallName = async (limit, offset) => {
+
+  // 1. получаем сами брони
+  const bookingsQuery = await pool.query(
     `SELECT
       b.id,
       b.hall_id,
@@ -21,10 +23,21 @@ export const getBookingWithHallName = async () =>{
       b.status
     FROM bookings b
     LEFT JOIN halls h ON h.id = b.hall_id
-    ORDER BY b.start_date`
-    );
-    return rows
-}
+    ORDER BY b.start_date DESC
+    LIMIT $1 OFFSET $2`,
+    [limit, offset]
+  );
+
+  // 2. получаем общее количество
+  const countQuery = await pool.query(
+    `SELECT COUNT(*) FROM bookings`
+  );
+
+  return {
+    items: bookingsQuery.rows,
+    total: Number(countQuery.rows[0].count)
+  };
+};
 
 export const getBookingById = async (id) => {
   const { rows } = await pool.query(

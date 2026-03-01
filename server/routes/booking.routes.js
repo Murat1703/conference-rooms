@@ -8,7 +8,7 @@ const upload = multer();
 router.get("/", bookingController.getBooking);
 router.get("/availibility", bookingController.getBookingByDate);
 
-router.get("/hall", bookingController.getBookingWithHallName);
+router.get("/hall", bookingController.getBookingsWithHallName);
 
 // GET /api/bookings/:id
 router.get("/:id", bookingController.getBookingById);

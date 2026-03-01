@@ -2,7 +2,8 @@ import { weeksToDays } from 'date-fns';
 import cls from './Calendar.module.css'
 import { MonthGrid } from './MonthGrid'
 import { useState, useEffect } from 'react';
-import { getBookings, getBookingsWithHall } from '../../../../api/booking.api.js';
+// import { getBookings, getBookingsWithHall } from '../../../../api/booking.api.js';
+import { useBookingsHallName } from '../../../../hooks/useBookingsHallName.js';
 
 export const Calendar = () =>{
 
@@ -12,30 +13,39 @@ export const Calendar = () =>{
 
     const [changeMonth, setChangeMonth] = useState(activeMonth);
 
-    const [loading, setLoading] = useState(true);
+    // const [loading, setLoading] = useState(true);
 
 
-    const [bookingsHall, setBookingsHall] = useState(null);
+    // const [bookingsHall, setBookingsHall] = useState(null);
 
-    const getBookingsHallName = async () =>{
-        try{
-            const res = await getBookingsWithHall();
-            setBookingsHall(res.data);
-        }
-        catch(err){
-            console.error("Ошибка загрузки броней", err);
-        }
-        finally {
-            setLoading(false)
-        }
-    }
+    // const getBookingsHallName = async () =>{
+    //     try{
+    //         const res = await getBookingsWithHall();
+    //         setBookingsHall(res.data);
+    //     }
+    //     catch(err){
+    //         console.error("Ошибка загрузки броней", err);
+    //     }
+    //     finally {
+    //         setLoading(false)
+    //     }
+    // }
 
     // console.log(bookingsHall)
 
     
+    // useEffect(()=>{
+    //     getBookingsHallName();
+    // }, [])
+
+
+    const {bookingsHall, loading, deleteItem, page, setPage, limit, setLimit, total, totalPages} = useBookingsHallName();
+
     useEffect(()=>{
-        getBookingsHallName();
+        setPage(0);
+        setLimit(0)
     }, [])
+
 
     return(
         <div>
